@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TradeApp</title>
+</head>
+<body>
+<h1>Товары</h1>
+<hr>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Товар</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Продавец</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="product : ${productsList}">
+        <td data-th-text="${product.title}"></td>
+        <td data-th-text="${product.price}"></td>
+        <td data-th-text="${product.vendor.name}">
+            <!--<a data-th-href="@{'/vendors/'+${product.vendor.id}}"><div data-th-text="${product.vendor.name}"></div></a>-->
+        </td>
+        <td>
+            <a data-th-href="@{'/products/'+${product.id}}">Подробнее</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<hr>
+<h3>Добавить товар</h3>
+<form action="add" method="post">
+    Название товара: <input type="text" name="title"/><br>
+    Описание товара: <input type="text" name="description"/><br>
+    Цена товара: <input type="text" name="price"/><br>
+    Продавец: <select><option data-th-each="vendor : ${vendorsList}" data-th-text="${vendor.name}" data-th-value="${vendor.id}"></option></select><br>
+    <input type="submit" value="Добавить товар"/>
+</form>
+<hr>
+<button onclick="location.href='/'">Назад</button>
+</body>
+</html>
