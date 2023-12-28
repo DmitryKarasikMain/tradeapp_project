@@ -14,6 +14,7 @@
         <th scope="col">Цена</th>
         <th scope="col">Продавец</th>
         <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -26,6 +27,11 @@
         <td>
             <a data-th-href="@{'/products/'+${product.id}}">Подробнее</a>
         </td>
+        <td>
+            <form action="addToFavourites" method="post">
+                <input type="submit" value="Добавить в избранное"/>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -35,7 +41,7 @@
     Название товара: <input type="text" name="title"/><br>
     Описание товара: <input type="text" name="description"/><br>
     Цена товара: <input type="text" name="price"/><br>
-    Продавец: <select><option data-th-each="vendor : ${vendorsList}" data-th-text="${vendor.name}" data-th-value="${vendor.id}"></option></select><br>
+    Продавец: <select name="vendorId" id="vendorId"><option data-th-each="vendor : ${vendorsList}" data-th-text="${vendor.name}" data-th-value="${vendor.id}"></option></select><br>
     <input type="submit" value="Добавить товар"/>
 </form>
 <hr>
