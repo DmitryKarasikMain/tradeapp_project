@@ -23,7 +23,7 @@ public class User implements UserDetails{
     private boolean enabled;
     private String authority;
 
-    @OneToMany
+    @ManyToMany
     private List<Product> favoriteProducts;
 
     public List<GrantedAuthority> getAuthorities() {

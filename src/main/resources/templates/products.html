@@ -29,6 +29,7 @@
         </td>
         <td>
             <form action="addToFavourites" method="post">
+                <input id="productId" name="productId" hidden data-th-value="${product.id}">
                 <input type="submit" value="Добавить в избранное"/>
             </form>
         </td>

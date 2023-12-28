@@ -9,8 +9,11 @@ import dmitry_karasik.demo.repository.UserRepository;
 import dmitry_karasik.demo.repository.VendorRepository;
 import dmitry_karasik.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequestMapping("/products/")
 @RequiredArgsConstructor
@@ -52,17 +56,21 @@ public class ProductController {
     }
 
     @PostMapping("addToFavourites")
-    @PreAuthorize("hasAuthority('USER')")
+//    @PreAuthorize("hasAuthority('USER')")
     public String addToFavourite(Long productId, Authentication authentication) {
+        log.info("111111111111111");
         var productOptional = productRepository.findById(productId);
-        var user = (User) authentication.getPrincipal();
-        user = (User) userService.loadUserByUsername(user.getUsername());
-        if (!user.getFavoriteProducts().contains(productOptional.get())) {
-            user.getFavoriteProducts().add(productOptional.get());
-            userService.save(user);
-        } else {
-            user.getFavoriteProducts().remove(productOptional.get());
-            userService.save(user);
+        if (productOptional.isPresent()) {
+            var user = (User) authentication.getPrincipal();
+            log.info("user id = {}", user.getId());
+            user = (User) userService.loadUserByUsername(user.getUsername());
+            if (!user.getFavoriteProducts().contains(productOptional.get())) {
+                user.getFavoriteProducts().add(productOptional.get());
+                userService.save(user);
+            } else {
+                user.getFavoriteProducts().remove(productOptional.get());
+                userService.save(user);
+            }
         }
         return "redirect:/products/";
     }
