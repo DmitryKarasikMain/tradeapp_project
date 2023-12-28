@@ -48,6 +48,7 @@ public class ProductController {
     }
 
     @PostMapping("add")
+    @PreAuthorize("hasAuthority('USER')")
     public String addProduct(ProductDTO request) {
         Product product = request.toEntity();
         product.setVendor(vendorRepository.findById(request.getVendorId()).get());
@@ -56,7 +57,7 @@ public class ProductController {
     }
 
     @PostMapping("addToFavourites")
-//    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('USER')")
     public String addToFavourite(Long productId, Authentication authentication) {
         log.info("111111111111111");
         var productOptional = productRepository.findById(productId);

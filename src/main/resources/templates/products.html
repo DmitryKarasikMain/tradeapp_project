@@ -28,7 +28,7 @@
             <a data-th-href="@{'/products/'+${product.id}}">Подробнее</a>
         </td>
         <td>
-            <form action="addToFavourites" method="post">
+            <form data-sec-authorize="hasAuthority('USER')" data-th-action="@{/products/addToFavourites}" method="post">
                 <input id="productId" name="productId" hidden data-th-value="${product.id}">
                 <input type="submit" value="Добавить в избранное"/>
             </form>
@@ -38,7 +38,7 @@
 </table>
 <hr>
 <h3>Добавить товар</h3>
-<form action="add" method="post">
+<form data-sec-authorize="hasAuthority('USER')" data-th-action="@{/products/add}" method="post">
     Название товара: <input type="text" name="title"/><br>
     Описание товара: <input type="text" name="description"/><br>
     Цена товара: <input type="text" name="price"/><br>
