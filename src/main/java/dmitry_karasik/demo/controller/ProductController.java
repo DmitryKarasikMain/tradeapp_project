@@ -9,6 +9,7 @@ import dmitry_karasik.demo.repository.UserRepository;
 import dmitry_karasik.demo.repository.VendorRepository;
 import dmitry_karasik.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +52,7 @@ public class ProductController {
     }
 
     @PostMapping("addToFavourites")
+    @PreAuthorize("hasAuthority('USER')")
     public String addToFavourite(Long productId, Authentication authentication) {
         var productOptional = productRepository.findById(productId);
         var user = (User) authentication.getPrincipal();
