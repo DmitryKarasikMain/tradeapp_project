@@ -15,6 +15,7 @@
         <th scope="col">Продавец</th>
         <th scope="col"></th>
         <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -31,6 +32,12 @@
             <form data-sec-authorize="hasAuthority('USER')" data-th-action="@{/products/addToFavourites}" method="post">
                 <input id="productId" name="productId" hidden data-th-value="${product.id}">
                 <input type="submit" value="Добавить в избранное"/>
+            </form>
+        </td>
+        <td>
+            <form data-sec-authorize="hasAuthority('USER')" data-th-action="@{/products/remove}" method="post">
+                <input id="id" name="id" hidden data-th-value="${product.id}">
+                <input type="submit" value="Удалить товар"/>
             </form>
         </td>
     </tr>

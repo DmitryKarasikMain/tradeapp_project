@@ -75,4 +75,21 @@ public class ProductController {
         }
         return "redirect:/products/";
     }
+
+    @PostMapping("remove")
+    @PreAuthorize("hasAuthority('USER')")
+    public String removeProduct(Long id, Authentication authentication) {
+        var productOptional = productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            var user = (User) authentication.getPrincipal();
+            log.info("user id = {}", user.getId());
+            user = (User) userService.loadUserByUsername(user.getUsername());
+            if (!user.getFavoriteProducts().contains(productOptional.get())) {
+                user.getFavoriteProducts().remove(productOptional.get());
+                userService.save(user);
+            }
+        }
+        productRepository.deleteById(id);
+        return "redirect:/products/";
+    }
 }
